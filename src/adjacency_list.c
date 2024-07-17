@@ -38,10 +38,12 @@ NodePtr createNode(char *vertex)
     return node;
 }
 
+// TODO: NOT FINISHED YET
 void addEdge(GraphPtr graphPtr, char *source, char *destination)
 {
     NodePtr desNode = createNode(destination);
-    desNode->next = graphPtr->list[];
+    // TODO: Connect destinations to source
+    // desNode->next = graphPtr->list[];
 
     NodePtr srcNode = createNode(source);
     if (srcNode != NULL && desNode != NULL)

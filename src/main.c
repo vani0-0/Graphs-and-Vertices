@@ -47,18 +47,19 @@ int main()
             if (source[0] == 0)
             {
                 strcpy(source, line);
-                // printf("Source: %s\n", source);
+                printf("Source: %s\n", source);
             }
             else
             {
                 strcpy(destination, line);
-                // printf("Destination: %s\n", destination);
-                addEdge(graph, source, destination);
+                printf("Destination: %s\n", destination);
+                // TODO: In progress here
+                // addEdge(graph, source, destination);
             }
         }
     }
 
-    printGraph(graph);
+    // printGraph(graph);
     fclose(fptr);
     return 0;
 }
