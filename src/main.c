@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#include "../includes/adjacency_list.h"
+
 #define MAX_STR 124
 
 // Start
@@ -10,7 +12,6 @@ int main()
 {
     FILE *fptr;
     char file_name[MAX_STR];
-    // vertex_id[MAX_STR];
 
     printf("Input filename: ");
     fgets(file_name, MAX_STR, stdin);
@@ -25,27 +26,39 @@ int main()
 
     char line[MAX_STR];
     int number_of_vertices = 0;
-    int index = 0;
+    GraphPtr graph;
 
-    while (fscanf(fptr, "%s", line) != EOF)
+    if (fscanf(fptr, "%s", line) != EOF)
     {
-        if (index == 0)
-            number_of_vertices = atoi(line);
-        else
-        {
-                }
-        index++;
+        number_of_vertices = atoi(line);
+        graph = createGraph(number_of_vertices);
     }
 
-    fclose(fptr);
-    // printf("Input start vertext for the traversal: ");
-    // fgets(vertex_id, MAX_STR, stdin);
-    // printf("Vertext ID: ");
-    // puts(vertex_id);
+    char source[MAX_STR], destination[MAX_STR];
+    while (fscanf(fptr, "%s", line) != EOF)
+    {
+        if (strcmp(line, "-1") == 0)
+        {
+            if (source[0] != 0)
+                source[0] = 0;
+        }
+        else
+        {
+            if (source[0] == 0)
+            {
+                strcpy(source, line);
+                // printf("Source: %s\n", source);
+            }
+            else
+            {
+                strcpy(destination, line);
+                // printf("Destination: %s\n", destination);
+                addEdge(graph, source, destination);
+            }
+        }
+    }
 
-    // *Todo: Output filename "TRAVERSALS.txt"
-    // ? A list of vertex IDs with the corresponding degree for each vertex. Using the graph in Figure 1 as an example, the output will be (shown in blue text color):
-    // ? A list of vertex IDs that correspond to a BFS traversal from a specified start vertex.
-    // ? A list of vertex IDs that correspond to a DFS traversal from a specified start vertex (note: same start vertex as in BFS traversal).
+    printGraph(graph);
+    fclose(fptr);
     return 0;
 }
