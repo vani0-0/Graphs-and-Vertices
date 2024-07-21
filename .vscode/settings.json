@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    "stdio.h": "c",
+    "string.h": "c",
+    "stdlib.h": "c",
+    "xstring": "c",
+    "xutility": "c",
+    "graph.h": "c",
+    "node.h": "c",
+    "traversals.h": "c",
+    "stdbool.h": "c"
+  }
+}

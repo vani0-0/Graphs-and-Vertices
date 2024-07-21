@@ -1,15 +1,19 @@
+#include "../includes/graph.h"
+#include "../includes/traversals.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-
-#include "../includes/adjacency_list.h"
-
 #define MAX_STR 124
 
-// Start
+void trim_newline(char *str)
+{
+    str[strcspn(str, "\n")] = 0;
+}
+
 int main()
 {
+
     FILE *fptr;
     char file_name[MAX_STR];
 
@@ -20,21 +24,20 @@ int main()
 
     if (fptr == NULL)
     {
-        printf("%s not found.", file_name);
+        printf("\033[31m%s not found.\033[0m", file_name);
         return 1;
     }
 
     char line[MAX_STR];
     int number_of_vertices = 0;
-    GraphPtr graph;
 
     if (fscanf(fptr, "%s", line) != EOF)
     {
         number_of_vertices = atoi(line);
-        graph = createGraph(number_of_vertices);
     }
-
+    GraphPtr graph = createGraph(number_of_vertices);
     char source[MAX_STR], destination[MAX_STR];
+    int count = 0;
     while (fscanf(fptr, "%s", line) != EOF)
     {
         if (strcmp(line, "-1") == 0)
@@ -47,19 +50,38 @@ int main()
             if (source[0] == 0)
             {
                 strcpy(source, line);
-                printf("Source: %s\n", source);
+                strncpy(graph->vertices[count], source, strlen(source) + 1);
+                count++;
             }
             else
             {
                 strcpy(destination, line);
-                printf("Destination: %s\n", destination);
+                // printf("Destination: %s\n", destination);
                 // TODO: In progress here
-                // addEdge(graph, source, destination);
+                addEdge(graph, source, destination);
             }
         }
     }
+    printGraph(graph);
 
-    // printGraph(graph);
+    freeGraph(graph);
     fclose(fptr);
+
+    char vertex_id[MAX_STR];
+    printf("Input start vertex for traversal: ");
+    fgets(vertex_id, MAX_STR, stdin);
+    trim_newline(vertex_id);
+
+    int index = vertexExists(graph, vertex_id);
+
+    if (index == -1)
+    {
+        printf("\033[31mVertex %s not found.\033[0m\n", vertex_id);
+        freeGraph(graph);
+        return 1;
+    }
+
+    BFS(graph, vertex_id, index);
+
     return 0;
 }
