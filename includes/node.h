@@ -2,20 +2,13 @@
 #define __NODE_H 1
 
 typedef struct Node *NodePtr;
-typedef struct NodeList *NodeListPtr;
-
-struct NodeList
-{
-    NodePtr head;
-    int count;
-};
-
 struct Node
 {
-    char *data;
-    struct Node *next;
+    char *vertex;
+    NodePtr next;
 };
-
-NodePtr createNode(char *vertex);
-
-#endif // __NODE_H
+NodePtr createNode(char *vertex, NodePtr next);
+void printNode(NodePtr node);
+char *getVertex(NodePtr adjacency_list);
+NodePtr getNext(NodePtr node);
+#endif //__NODE_H
